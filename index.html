@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WCC Gathering Schedules</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+      .navbar-custom {
+        background-color: #5288be; /* Darker grey */
+      }
+      .navbar-custom .navbar-brand,
+      .navbar-custom .nav-link {
+        color: white;
+      }
+      .container-fluid {
+        flex: 1;
+        display: flex;
+      }
+      .side-panel {
+        width: 250px;
+        background-color: #f8f9fa;
+        padding: 1rem;
+        border-right: 1px solid #dee2e6;
+      }
+      .content {
+        flex: 1;
+        padding: 1rem;
+        background-color: #f1f1f1; /* Dark grey */
+        color: white; /* White text */
+      }
+
+      #gatheringHeading {
+        color: #5288be;
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-align: center;
+        padding-bottom: 1rem;
+      }
+      .date-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 1rem;
+      }
+      .date-item {
+        padding: 1rem;
+        background-color: #495057; /* Slightly lighter grey */
+        text-align: center;
+        border-radius: 0.5rem;
+      }
+      @media (max-width: 768px) {
+        .side-panel {
+          width: 100%;
+          border-right: none;
+          border-bottom: 1px solid #dee2e6;
+        }
+        .date-grid {
+          grid-template-columns: repeat(
+            2,
+            1fr
+          ); /* Stack columns on smaller screens */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-custom">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <img
+            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-calendar3' viewBox='0 0 16 16'%3E%3Cpath d='M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2M1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857z'/%3E%3Cpath d='M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2'/%3E%3C/svg%3E"
+            alt="Logo"
+            width="30"
+            height="24"
+            class="d-inline-block align-text-top"
+          />
+          WCC Gathering Schedules
+        </a>
+      </div>
+    </nav>
+    <div class="container-fluid">
+      <div class="side-panel">
+        <h5>Current Date and Time</h5>
+        <div id="currentDateTime"></div>
+        <div class="mt-4">
+          <label for="gatheringSelect" class="form-label">Gathering</label>
+          <select
+            class="form-select"
+            id="gatheringSelect"
+            onchange="updateHeading()"
+          >
+            <option>Prayer Meeting</option>
+            <option>Worship Service</option>
+            <option>Thanksgiving</option>
+          </select>
+        </div>
+        <div class="mt-4">
+          <label for="timezoneSelect" class="form-label">Timezone</label>
+          <select class="form-select" id="timezoneSelect">
+            <option>Pacific Time</option>
+            <option>Mountain Time</option>
+            <option>Central Time</option>
+          </select>
+        </div>
+      </div>
+      <div class="content">
+        <h2 id="gatheringHeading">Prayer Meeting Schedule</h2>
+        <div class="date-grid" id="dateGrid"></div>
+      </div>
+    </div>
+    <script>
+      function updateDateTime() {
+        const now = new Date();
+        const options = {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        };
+        document.getElementById("currentDateTime").textContent =
+          now.toLocaleDateString("en-US", options);
+      }
+      setInterval(updateDateTime, 1000);
+      updateDateTime(); // Initial call to display the time immediately on load
+
+      function updateDateGrid() {
+        const dateGrid = document.getElementById("dateGrid");
+        dateGrid.innerHTML = ""; // Clear previous dates
+        const today = new Date();
+        const dayOfWeek = today.getDay(); // Get current day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
+        const daysFromTuesday = (dayOfWeek + 6) % 7; // Calculate days from the previous Tuesday
+        const startDate = new Date(today);
+        startDate.setDate(today.getDate() - daysFromTuesday + 2); // Set start date to the most recent Tuesday
+
+        for (let i = 0; i < 7; i++) {
+          const dateItem = document.createElement("div");
+          dateItem.className = "date-item";
+          const currentDate = new Date(startDate);
+          currentDate.setDate(startDate.getDate() + i);
+          dateItem.textContent = currentDate.toLocaleDateString("en-US", {
+            month: "long",
+            day: "numeric",
+            weekday: "long",
+          });
+          dateGrid.appendChild(dateItem);
+        }
+      }
+
+      function updateHeading() {
+        const gatheringSelect = document.getElementById("gatheringSelect");
+        const gatheringHeading = document.getElementById("gatheringHeading");
+        gatheringHeading.textContent = `${gatheringSelect.value} Schedule`;
+        updateDateGrid();
+      }
+
+      updateHeading(); // Initial call to set the heading and date grid on load
+    </script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+      integrity="sha384-oBqDVmMz4fnFO9gybBogGzY8z1L1dgi6M9Gd1p6K4tG2Kp3jtBphH7U26JQFfB8+"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+      integrity="sha384-ho+j7jyWK8fNQe+A12FpExW3z58sACJg0S2rZhG0ynNYwtOr1kKMGKbI8JxZfVVOA"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
