@@ -40,33 +40,17 @@
         background-color: #343a40; /* Dark grey */
         color: white; /* White text */
       }
-      .date-grid,
-      .time-grid {
+      .grid {
         display: grid;
         grid-template-columns: repeat(7, 1fr);
-        gap: 1rem;
-        margin-bottom: 2rem;
+        gap: 10px;
+        margin-top: 20px;
       }
-      .date-item,
-      .time-item {
-        padding: 1rem;
-        background-color: #495057; /* Slightly lighter grey */
+      .grid-item {
+        background-color: #495057;
+        padding: 10px;
         text-align: center;
-        border-radius: 0.5rem;
-      }
-      @media (max-width: 768px) {
-        .side-panel {
-          width: 100%;
-          border-right: none;
-          border-bottom: 1px solid #dee2e6;
-        }
-        .date-grid,
-        .time-grid {
-          grid-template-columns: repeat(
-            2,
-            1fr
-          ); /* Stack columns on smaller screens */
-        }
+        border-radius: 5px;
       }
     </style>
   </head>
@@ -75,7 +59,7 @@
       <div class="container-fluid">
         <a class="navbar-brand" href="#">
           <img
-            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-calendar3' viewBox='0 0 16 16'%3E%3Cpath d='M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a 2 0 0 0-2-2M1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857z'/%3E%3Cpath d='M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2'/%3E%3C/svg%3E"
+            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-calendar3' viewBox='0 0 16 16'%3E%3Cpath d='M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a 2 0 0 0 2-2M1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857z'/%3E%3Cpath d='M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2'/%3E%3C/svg%3E"
             alt="Logo"
             width="30"
             height="24"
@@ -94,7 +78,7 @@
           <select
             class="form-select"
             id="gatheringSelect"
-            onchange="updateHeading()"
+            onchange="updateGathering()"
           >
             <option>Prayer Meeting</option>
             <option>Worship Service</option>
@@ -103,7 +87,11 @@
         </div>
         <div class="mt-4">
           <label for="timezoneSelect" class="form-label">Timezone</label>
-          <select class="form-select" id="timezoneSelect">
+          <select
+            class="form-select"
+            id="timezoneSelect"
+            onchange="updateGathering()"
+          >
             <option>Pacific Time</option>
             <option>Mountain Time</option>
             <option>Central Time</option>
@@ -112,8 +100,8 @@
       </div>
       <div class="content">
         <h2 id="gatheringHeading">Prayer Meeting Schedule</h2>
-        <div class="date-grid" id="dateGrid"></div>
-        <div class="time-grid" id="timeGrid"></div>
+        <div id="dateGrid" class="grid"></div>
+        <div id="timeGrid" class="grid"></div>
       </div>
     </div>
     <script>
@@ -134,80 +122,51 @@
       setInterval(updateDateTime, 1000);
       updateDateTime(); // Initial call to display the time immediately on load
 
-      function updateDateGrid() {
-        const dateGrid = document.getElementById("dateGrid");
-        dateGrid.innerHTML = ""; // Clear previous dates
-        const today = new Date();
-        const dayOfWeek = today.getDay(); // Get current day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
-        const daysFromTuesday = (dayOfWeek + 6) % 7; // Calculate days from the previous Tuesday
-        const startDate = new Date(today);
-        startDate.setDate(today.getDate() - daysFromTuesday + 2); // Set start date to the most recent Tuesday
-
-        for (let i = 0; i < 7; i++) {
-          const dateItem = document.createElement("div");
-          dateItem.className = "date-item";
-          const currentDate = new Date(startDate);
-          currentDate.setDate(startDate.getDate() + i);
-          dateItem.textContent = currentDate.toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            weekday: "long",
-          });
-          dateGrid.appendChild(dateItem);
-        }
-      }
-
-      function updateTimeGrid() {
-        const timeGrid = document.getElementById("timeGrid");
-        timeGrid.innerHTML = ""; // Clear previous times
-
-        const times = [
-          "2:30 AM",
-          "3:30 AM",
-          "4:30 AM",
-          "5:30 AM",
-          "6:30 AM",
-          "7:30 AM",
-          "8:30 AM",
-          "9:30 AM",
-          "10:30 AM",
-          "11:30 AM",
-          "12:30 PM",
-          "1:30 PM",
-          "2:30 PM",
-          "3:30 PM",
-          "4:30 PM",
-          "5:30 PM",
-          "6:30 PM",
-          "7:30 PM",
-          "8:30 PM",
-          "9:30 PM",
-          "10:30 PM",
-          "11:30 PM",
-          "12:30 AM",
-          "1:30 AM",
-        ];
-
-        for (let i = 0; i < 7; i++) {
-          for (let j = 0; j < 7; j++) {
-            const timeItem = document.createElement("div");
-            timeItem.className = "time-item";
-            const index = (i + j) % times.length;
-            timeItem.textContent = times[index];
-            timeGrid.appendChild(timeItem);
-          }
-        }
-      }
-
-      function updateHeading() {
+      function updateGathering() {
         const gatheringSelect = document.getElementById("gatheringSelect");
+        const timezoneSelect = document.getElementById("timezoneSelect");
         const gatheringHeading = document.getElementById("gatheringHeading");
         gatheringHeading.textContent = `${gatheringSelect.value} Schedule`;
-        updateDateGrid();
-        updateTimeGrid();
+
+        updateDateGrid(gatheringSelect.value, timezoneSelect.value);
       }
 
-      updateHeading(); // Initial call to set the heading and date grid on load
+      function updateDateGrid(gathering, timezone) {
+        const dateGrid = document.getElementById("dateGrid");
+        dateGrid.innerHTML = "";
+
+        const startDay = new Date();
+        startDay.setDate(startDay.getDate() - ((startDay.getDay() + 5) % 7));
+
+        for (let i = 0; i < 7; i++) {
+          const gridItem = document.createElement("div");
+          gridItem.className = "grid-item";
+          const date = new Date(startDay);
+          date.setDate(startDay.getDate() + i);
+          const options = { month: "long", day: "numeric", weekday: "long" };
+          gridItem.textContent = date.toLocaleDateString("en-US", options);
+
+          dateGrid.appendChild(gridItem);
+        }
+
+        const timeGrid = document.getElementById("timeGrid");
+        timeGrid.innerHTML = "";
+
+        for (let i = 0; i < 7 * 3; i++) {
+          const gridItem = document.createElement("div");
+          gridItem.className = "grid-item";
+          gridItem.textContent = i + 1;
+          timeGrid.appendChild(gridItem);
+        }
+
+        if (gathering === "Prayer Meeting" && timezone === "Mountain Time") {
+          timeGrid.children[1].textContent = "4:30 am";
+          timeGrid.children[8].textContent = "7:00 pm";
+          timeGrid.children[15].textContent = "8:00 pm";
+        }
+      }
+
+      updateGathering(); // Initial call to set the heading and date grid on load
     </script>
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
