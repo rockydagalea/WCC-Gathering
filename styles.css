@@ -53,8 +53,21 @@ header .right {
   background-color: #f8f9fa;
 }
 
+.date-slider {
+  overflow: auto; /* Ensures scrollbars are enabled */
+}
+
 .date-slider::-webkit-scrollbar {
-  display: none;
+  width: 9px; /* Adjust width as needed */
+}
+
+.date-slider::-webkit-scrollbar-thumb {
+  background-color: #bfbfbf; /* Scrollbar thumb color */
+  border-radius: 6px; /* Rounded corners for the scrollbar thumb */
+}
+
+.date-slider::-webkit-scrollbar-thumb:hover {
+  background-color: #878787; /* Darker color on hover */
 }
 
 .date-item {
@@ -96,10 +109,12 @@ header .right {
 }
 
 /* Table Styling */
-.table-container {
+/* .table-container {
+  max-width: 100%;
+  overflow-x: scroll;
   padding: 20px;
   background-color: #f8f9fa;
-}
+} */
 
 table {
   width: 100%;
@@ -115,7 +130,7 @@ td {
 }
 
 th {
-  background-color: #343a40;
+  background-color: #494949;
   color: white;
 }
 
@@ -138,37 +153,91 @@ button {
   cursor: pointer;
 }
 
+.date-slider {
+  display: flex;
+  overflow-x: auto; /* Allows horizontal scrolling */
+  white-space: nowrap; /* Prevents wrapping */
+}
+
+/* Hide scrollbar for WebKit browsers (optional) */
+.date-slider::-webkit-scrollbar {
+  display: none;
+}
+
 /* Responsive table */
-@media (max-width: 600px) {
-  table,
-  th,
-  td {
-    display: block;
-  }
-
-  th,
-  td {
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-  thead {
+@media (max-width: 650px) {
+  th {
     display: none;
   }
 
+  /* td {
+    display: block;
+    padding: 0.75rem;
+  } */
+
   td {
-    text-align: right;
-    padding-left: 50%;
-    position: relative;
+    display: grid;
+    grid-template-columns: 16ch auto;
+    padding: 0.75rem;
+  }
+
+  td:first-child {
+    padding: 1rem;
+  }
+
+  td:last-child {
+    padding: 1rem;
   }
 
   td::before {
-    content: attr(data-label);
-    position: absolute;
-    left: 0;
-    width: 50%;
-    padding-left: 10px;
-    font-weight: bold;
-    text-align: left;
+    font-weight: 700;
+    /* content: attr(data-label) ": "; Add colon and space here */
+  }
+
+  td:nth-of-type(1)::before {
+    content: "Time:  "; /* Adjust the content for the first column */
+  }
+
+  td:nth-of-type(2)::before {
+    content: "Day:  "; /* Adjust the content for the second column */
+  }
+
+  td:nth-of-type(3)::before {
+    content: "Gathering:  "; /* Adjust the content for the third column */
+  }
+
+  td:nth-of-type(4)::before {
+    content: "Locale:  "; /* Adjust the content for the fourth column */
+  }
+
+  td:nth-of-type(5)::before {
+    content: "Zoom ID:  "; /* Adjust the content for the fifth column */
+  }
+
+  td:nth-of-type(6)::before {
+    content: "Passcode:  "; /* Adjust the content for the sixth column */
+  }
+}
+
+/* Responsive styles */
+@media (max-width: 850px) {
+  .date-slider {
+    flex-direction: column; /* Stack items vertically on smaller screens */
+    overflow-x: hidden; /* Hide horizontal scroll on smaller screens */
+  }
+
+  .date-slider .slider-item {
+    display: block; /* Make each item take full width */
+    margin-bottom: 10px; /* Add space between items */
+  }
+}
+
+@media (max-width: 500px) {
+  .date-slider {
+    font-size: 0.9rem; /* Adjust font size for very small screens */
+  }
+
+  .date-slider .slider-item {
+    margin-bottom: 5px; /* Adjust space between items for very small screens */
   }
 }
