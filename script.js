@@ -107,6 +107,14 @@ const scheduleData = {
         "4033337275",
         "saskatoon",
       ],
+      [
+        "7:30 pm",
+        "Wednesday",
+        "Prayer Meeting",
+        "Vancouver",
+        "3337773737",
+        "333777",
+      ],
     ],
 
     "America/Los_Angeles": [
@@ -208,6 +216,14 @@ const scheduleData = {
         "4033337275",
         "saskatoon",
       ],
+      [
+        "7:30 pm",
+        "Wednesday",
+        "Prayer Meeting",
+        "Vancouver",
+        "3337773737",
+        "333777",
+      ],
     ],
     "America/Chicago": [
       //Central Time
@@ -308,15 +324,22 @@ const scheduleData = {
         "4033337275",
         "saskatoon",
       ],
+      [
+        "8:30 pm",
+        "Wednesday",
+        "Prayer Meeting",
+        "Vancouver",
+        "3337773737",
+        "333777",
+      ],
     ],
   },
 
   Thursday: {
     "America/Denver": [
       //Mountain Time
-
       [
-        "7:00 pm",
+        "6:00 pm",
         "Thursday",
         "Prayer Meeting",
         "Vancouver",
@@ -420,7 +443,7 @@ const scheduleData = {
     "America/Chicago": [
       //Central Time
       [
-        "8:00 pm",
+        "7:00 pm",
         "Thursday",
         "Prayer Meeting",
         "Vancouver",
