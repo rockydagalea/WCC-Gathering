@@ -499,14 +499,6 @@ const scheduleData = {
       //Mountain Time
 
       [
-        "5:30 pm",
-        "Friday",
-        "Worship Service",
-        "Calgary North",
-        "4033331111",
-        "regina",
-      ],
-      [
         "6:00 pm",
         "Friday",
         "Worship Service",
@@ -528,7 +520,7 @@ const scheduleData = {
         "Worship Service",
         "Calgary North",
         "4033331111",
-        "regina",
+        "418418",
       ],
       [
         "6:00 pm",
@@ -562,6 +554,7 @@ const scheduleData = {
         "2043337777",
         "neepawa",
       ],
+      ["6:30 pm", "Friday", "Prayer Meeting", "Regina", "4033334444", "regina"],
       [
         "6:30 pm",
         "Friday",
@@ -622,14 +615,7 @@ const scheduleData = {
 
     "America/Los_Angeles": [
       //Pacific Time
-      [
-        "4:30 pm",
-        "Friday",
-        "Worship Service",
-        "Calgary North",
-        "4033331111",
-        "regina",
-      ],
+
       [
         "5:00 pm",
         "Friday",
@@ -652,7 +638,7 @@ const scheduleData = {
         "Worship Service",
         "Calgary North",
         "4033331111",
-        "regina",
+        "418418",
       ],
       [
         "5:00 pm",
@@ -686,6 +672,7 @@ const scheduleData = {
         "2043337777",
         "neepawa",
       ],
+      ["5:30 pm", "Friday", "Prayer Meeting", "Regina", "4033334444", "regina"],
       [
         "5:30 pm",
         "Friday",
@@ -751,7 +738,7 @@ const scheduleData = {
         "Worship Service",
         "Calgary North",
         "4033331111",
-        "regina",
+        "418418",
       ],
       [
         "7:00 pm",
@@ -775,7 +762,7 @@ const scheduleData = {
         "Worship Service",
         "Calgary North",
         "4033331111",
-        "regina",
+        "418418",
       ],
       [
         "7:00 pm",
@@ -809,6 +796,8 @@ const scheduleData = {
         "2043337777",
         "neepawa",
       ],
+
+      ["7:30 pm", "Friday", "Prayer Meeting", "Regina", "4033334444", "regina"],
       [
         "7:30 pm",
         "Friday",
