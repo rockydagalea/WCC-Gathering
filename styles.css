@@ -48,6 +48,22 @@ header .right {
   color: black; /* Optional: Ensure text color is readable */
 }
 
+#gatheringType {
+  text-align: left;
+}
+
+#gatheringType {
+  margin-right: 10px;
+}
+
+#gatheringType {
+  padding: 5px;
+  font-size: 1em;
+  background-color: white; /* Change dropdown menu background to white */
+  border: 1px solid #ccc; /* Optional: Add a border to the dropdown */
+  color: black; /* Optional: Ensure text color is readable */
+}
+
 .date-slider {
   display: flex;
   justify-content: flex-start; /* Align items to the start */

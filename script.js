@@ -1554,6 +1554,8 @@ function populateDateSlider() {
 
 function selectDate(day) {
   const selectedTimezone = document.getElementById("timezone").value;
+  const selectedType = document.getElementById("gatheringType").value;
+
   // Remove the 'selected' class from all date items
   const dateItems = document.querySelectorAll(".date-item");
   dateItems.forEach((item) => item.classList.remove("selected"));
@@ -1593,27 +1595,30 @@ function selectDate(day) {
   // Add table body
   const tbody = document.createElement("tbody");
   const data = scheduleData[day]?.[selectedTimezone];
+
   if (data) {
-    data.forEach((row) => {
-      const tr = document.createElement("tr");
-      row.forEach((cell) => {
-        const td = document.createElement("td");
-        td.textContent = cell;
-        tr.appendChild(td);
-      });
+    data
+      .filter((row) => selectedType === "All" || row[2] === selectedType) // Filter by gathering type
+      .forEach((row) => {
+        const tr = document.createElement("tr");
+        row.forEach((cell) => {
+          const td = document.createElement("td");
+          td.textContent = cell;
+          tr.appendChild(td);
+        });
 
-      const copyButton = document.createElement("button");
-      copyButton.textContent = "Copy Information";
-      copyButton.className = "copy-btn";
-      copyButton.addEventListener("click", function () {
-        copyRowData(tr);
-      });
+        const copyButton = document.createElement("button");
+        copyButton.textContent = "Copy Information";
+        copyButton.className = "copy-btn";
+        copyButton.addEventListener("click", function () {
+          copyRowData(tr);
+        });
 
-      const actionCell = document.createElement("td");
-      actionCell.appendChild(copyButton);
-      tr.appendChild(actionCell);
-      tbody.appendChild(tr);
-    });
+        const actionCell = document.createElement("td");
+        actionCell.appendChild(copyButton);
+        tr.appendChild(actionCell);
+        tbody.appendChild(tr);
+      });
   } else {
     const tr = document.createElement("tr");
     const td = document.createElement("td");
@@ -1623,6 +1628,13 @@ function selectDate(day) {
     tbody.appendChild(tr);
   }
   table.appendChild(tbody);
+}
+
+function filterGatherings() {
+  const selectedDay = document.querySelector(".date-item.selected .day");
+  if (selectedDay) {
+    selectDate(selectedDay.textContent);
+  }
 }
 
 let debounceTimer;
