@@ -45,31 +45,6 @@ header .right {
   font-size: 1em;
 }
 
-.date-slider {
-  display: flex;
-  justify-content: center; /* Center the content */
-  overflow-x: auto;
-  padding: 10px 20px;
-  background-color: #f8f9fa;
-}
-
-.date-slider {
-  overflow: auto; /* Ensures scrollbars are enabled */
-}
-
-.date-slider::-webkit-scrollbar {
-  width: 9px; /* Adjust width as needed */
-}
-
-.date-slider::-webkit-scrollbar-thumb {
-  background-color: #bfbfbf; /* Scrollbar thumb color */
-  border-radius: 6px; /* Rounded corners for the scrollbar thumb */
-}
-
-.date-slider::-webkit-scrollbar-thumb:hover {
-  background-color: #878787; /* Darker color on hover */
-}
-
 .date-item {
   flex: 0 0 auto;
   margin-right: 15px;
@@ -153,15 +128,33 @@ button {
   cursor: pointer;
 }
 
+/* Hide scrollbar for WebKit browsers (optional) */
+.date-slider::-webkit-scrollbar {
+  display: none;
+}
+
 .date-slider {
   display: flex;
-  overflow-x: auto; /* Allows horizontal scrolling */
-  white-space: nowrap; /* Prevents wrapping */
+  justify-content: center;
+  white-space: nowrap;
+  overflow-x: auto;
+  width: 100%;
+  padding: 10px 20px;
+  background-color: #f8f9fa;
 }
 
 /* Hide scrollbar for WebKit browsers (optional) */
 .date-slider::-webkit-scrollbar {
-  display: none;
+  display: block; /* Ensure scrollbar is visible */
+}
+
+.date-slider::-webkit-scrollbar-thumb {
+  background-color: #bfbfbf; /* Scrollbar thumb color */
+  border-radius: 6px; /* Rounded corners for the scrollbar thumb */
+}
+
+.date-slider::-webkit-scrollbar-thumb:hover {
+  background-color: #878787; /* Darker color on hover */
 }
 
 /* Responsive table */
@@ -222,22 +215,14 @@ button {
 /* Responsive styles */
 @media (max-width: 850px) {
   .date-slider {
-    flex-direction: column; /* Stack items vertically on smaller screens */
-    overflow-x: hidden; /* Hide horizontal scroll on smaller screens */
+    width: 80vw; /* Adjust to 80% of viewport width or as needed */
+    max-width: 600px; /* Set a maximum width to ensure it's not too large */
+    overflow-x: auto; /* Enable horizontal scrolling */
   }
 
-  .date-slider .slider-item {
-    display: block; /* Make each item take full width */
-    margin-bottom: 10px; /* Add space between items */
-  }
-}
-
-@media (max-width: 500px) {
-  .date-slider {
-    font-size: 0.9rem; /* Adjust font size for very small screens */
-  }
-
-  .date-slider .slider-item {
-    margin-bottom: 5px; /* Adjust space between items for very small screens */
+  .date-slider .date-item {
+    flex: 1 0 auto; /* Allow items to grow and shrink as needed */
+    min-width: 100px; /* Ensure each item has a minimum width */
+    margin: 0 5px; /* Add some margin between items */
   }
 }
