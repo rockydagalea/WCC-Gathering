@@ -499,6 +499,14 @@ const scheduleData = {
       //Mountain Time
 
       [
+        "5:30 pm",
+        "Friday",
+        "Worship Service",
+        "Calgary North",
+        "4033331111",
+        "regina",
+      ],
+      [
         "6:00 pm",
         "Friday",
         "Worship Service",
@@ -615,6 +623,14 @@ const scheduleData = {
     "America/Los_Angeles": [
       //Pacific Time
       [
+        "4:30 pm",
+        "Friday",
+        "Worship Service",
+        "Calgary North",
+        "4033331111",
+        "regina",
+      ],
+      [
         "5:00 pm",
         "Friday",
         "Worship Service",
@@ -729,6 +745,14 @@ const scheduleData = {
     ],
     "America/Chicago": [
       //Central Time
+      [
+        "6:30 pm",
+        "Friday",
+        "Worship Service",
+        "Calgary North",
+        "4033331111",
+        "regina",
+      ],
       [
         "7:00 pm",
         "Friday",
