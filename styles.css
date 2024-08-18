@@ -45,26 +45,37 @@ header .right {
   font-size: 1em;
 }
 
+.date-slider {
+  display: flex;
+  justify-content: flex-start; /* Align items to the start */
+  white-space: nowrap;
+  overflow-x: auto; /* Enable horizontal scrolling */
+  scroll-snap-type: x mandatory; /* Snap scrolling */
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  width: 100%; /* Ensure it takes full width */
+  padding: 10px 20px;
+  background-color: #f8f9fa;
+}
+
+.date-slider::-webkit-scrollbar {
+  display: none; /* Hide scrollbar in WebKit browsers */
+}
+
 .date-item {
-  flex: 0 0 auto;
+  flex: 0 0 auto; /* Prevent flex items from growing */
   margin-right: 15px;
   text-align: center;
   background-color: #007bff;
   color: white;
   padding: 10px;
   border-radius: 5px;
-  width: 100px; /* Set equal width for all date items */
+  width: 100px;
   box-sizing: border-box; /* Include padding in the width */
+  scroll-snap-align: start; /* Snap items into view */
   transition: background-color 0.3s, transform 0.3s; /* Smooth hover transition */
   cursor: pointer;
 }
 
-.date-item:hover {
-  background-color: #0056b3; /* Darker shade on hover */
-  transform: scale(1.05); /* Slightly enlarge on hover */
-}
-
-/* Add this to your existing CSS */
 .date-item.selected {
   border: 2px solid red; /* Red outline for the selected date */
   background-color: #ff5733; /* Change background color for the selected date */
@@ -84,13 +95,6 @@ header .right {
 }
 
 /* Table Styling */
-/* .table-container {
-  max-width: 100%;
-  overflow-x: scroll;
-  padding: 20px;
-  background-color: #f8f9fa;
-} */
-
 table {
   width: 100%;
   border-collapse: collapse;
@@ -128,45 +132,11 @@ button {
   cursor: pointer;
 }
 
-/* Hide scrollbar for WebKit browsers (optional) */
-.date-slider::-webkit-scrollbar {
-  display: none;
-}
-
-.date-slider {
-  display: flex;
-  justify-content: center;
-  white-space: nowrap;
-  overflow-x: auto;
-  width: 100%;
-  padding: 10px 20px;
-  background-color: #f8f9fa;
-}
-
-/* Hide scrollbar for WebKit browsers (optional) */
-.date-slider::-webkit-scrollbar {
-  display: block; /* Ensure scrollbar is visible */
-}
-
-.date-slider::-webkit-scrollbar-thumb {
-  background-color: #bfbfbf; /* Scrollbar thumb color */
-  border-radius: 6px; /* Rounded corners for the scrollbar thumb */
-}
-
-.date-slider::-webkit-scrollbar-thumb:hover {
-  background-color: #878787; /* Darker color on hover */
-}
-
 /* Responsive table */
 @media (max-width: 650px) {
   th {
     display: none;
   }
-
-  /* td {
-    display: block;
-    padding: 0.75rem;
-  } */
 
   td {
     display: grid;
@@ -184,7 +154,6 @@ button {
 
   td::before {
     font-weight: 700;
-    /* content: attr(data-label) ": "; Add colon and space here */
   }
 
   td:nth-of-type(1)::before {
@@ -215,14 +184,14 @@ button {
 /* Responsive styles */
 @media (max-width: 850px) {
   .date-slider {
-    width: 80vw; /* Adjust to 80% of viewport width or as needed */
-    max-width: 600px; /* Set a maximum width to ensure it's not too large */
+    width: 100vw; /* Adjust to 100% of viewport width */
     overflow-x: auto; /* Enable horizontal scrolling */
   }
 
-  .date-slider .date-item {
-    flex: 1 0 auto; /* Allow items to grow and shrink as needed */
+  .date-item {
+    flex: 0 0 auto;
     min-width: 100px; /* Ensure each item has a minimum width */
-    margin: 0 5px; /* Add some margin between items */
+    margin: 0 5px;
+    scroll-snap-align: center; /* Align items in the center */
   }
 }
