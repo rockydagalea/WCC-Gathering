@@ -1,0 +1,174 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #03274b;
+  color: white;
+}
+
+header .left {
+  display: flex;
+  align-items: center;
+}
+
+header .left img {
+  margin-right: 10px; /* Space between the logo and the text */
+}
+
+header .left h1 {
+  margin: 0;
+  font-size: 1.5em; /* Adjust the size as needed */
+}
+
+header .right {
+  font-size: 1.2em;
+}
+
+.timezone-selector {
+  margin: 20px;
+  text-align: center;
+}
+
+.timezone-selector label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.timezone-selector select {
+  padding: 5px;
+  font-size: 1em;
+}
+
+.date-slider {
+  display: flex;
+  justify-content: center; /* Center the content */
+  overflow-x: auto;
+  padding: 10px 20px;
+  background-color: #f8f9fa;
+}
+
+.date-slider::-webkit-scrollbar {
+  display: none;
+}
+
+.date-item {
+  flex: 0 0 auto;
+  margin-right: 15px;
+  text-align: center;
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  width: 100px; /* Set equal width for all date items */
+  box-sizing: border-box; /* Include padding in the width */
+  transition: background-color 0.3s, transform 0.3s; /* Smooth hover transition */
+  cursor: pointer;
+}
+
+.date-item:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+  transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+/* Add this to your existing CSS */
+.date-item.selected {
+  border: 2px solid red; /* Red outline for the selected date */
+  background-color: #ff5733; /* Change background color for the selected date */
+}
+
+.date-item:last-child {
+  margin-right: 0; /* Remove the right margin from the last item */
+}
+
+.date-item .date {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.date-item .day {
+  font-size: 0.9em;
+}
+
+/* Table Styling */
+.table-container {
+  padding: 20px;
+  background-color: #f8f9fa;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th,
+td {
+  border: 1px solid #dee2e6;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #343a40;
+  color: white;
+}
+
+td {
+  background-color: #ffffff;
+}
+
+p {
+  text-align: center;
+  font-size: 1em;
+  font-style: italic;
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+/* Responsive table */
+@media (max-width: 600px) {
+  table,
+  th,
+  td {
+    display: block;
+  }
+
+  th,
+  td {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  thead {
+    display: none;
+  }
+
+  td {
+    text-align: right;
+    padding-left: 50%;
+    position: relative;
+  }
+
+  td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    width: 50%;
+    padding-left: 10px;
+    font-weight: bold;
+    text-align: left;
+  }
+}

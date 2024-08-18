@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WCC Gathering Schedule</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <div class="left">
+        <img src="./schedule.png" alt="WCC Logo" width="50px" />
+        <h1>WCC Gathering Playback Schedule</h1>
+      </div>
+      <div class="right" id="datetime"></div>
+    </header>
+    <div class="timezone-selector">
+      <label for="timezone">Select Time Zone:</label>
+      <select id="timezone">
+        <option value="America/Los_Angeles">Pacific Time</option>
+        <option value="America/Denver">Mountain Time</option>
+        <option value="America/Chicago">Central Time</option>
+      </select>
+    </div>
+    <div class="date-slider" id="dateSlider"></div>
+
+    <div class="table-container">
+      <table id="scheduleTable"></table>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
