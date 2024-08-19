@@ -1644,9 +1644,9 @@ function selectDate(day) {
 }
 
 function filterGatherings() {
-  const selectedDay = document.querySelector(".date-item.selected .day");
-  if (selectedDay) {
-    selectDate(selectedDay.textContent);
+  const selectedDayElement = document.querySelector(".date-item.selected .day");
+  if (selectedDayElement) {
+    selectDate(selectedDayElement.textContent);
   }
 }
 
@@ -1661,6 +1661,13 @@ document.getElementById("timezone").addEventListener("change", function () {
     }
   }, 300);
 });
+
+// Event listener for gathering type change
+document
+  .getElementById("gatheringType")
+  .addEventListener("change", function () {
+    filterGatherings();
+  });
 
 function copyRowData(row) {
   const table = document.getElementById("scheduleTable");
@@ -1686,17 +1693,19 @@ function copyRowData(row) {
   alert("Data copied to clipboard!");
 }
 
+// Initial setup
 updateDateTime();
 populateDateSlider();
+filterGatherings(); // Filter based on the initial date and gathering type
+
+// Update datetime every second
 setInterval(
   () => updateDateTime(document.getElementById("timezone").value),
   1000
 );
 
+// Timezone change event
 document.getElementById("timezone").addEventListener("change", function () {
   updateDateTime(this.value);
-  const selectedDay = document.querySelector(".date-item .selected .day");
-  if (selectedDay) {
-    selectDate(selectedDay.textContent);
-  }
+  filterGatherings(); // Update table when timezone changes
 });
